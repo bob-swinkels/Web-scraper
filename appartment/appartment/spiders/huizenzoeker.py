@@ -9,7 +9,21 @@ class AppartmentSpider(Spider):
     name = "appartment"
     allowed_domains = ["huizenzoeker.nl"]
     start_urls = [
+        "https://www.huizenzoeker.nl/huur/noord-holland/amsterdam/",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/breda/",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/delft/",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/s-hertogenbosch/",
         "https://www.huizenzoeker.nl/huur/zuid-holland/s-gravenhage/",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/eindhoven/",
+        "https://www.huizenzoeker.nl/huur/overijssel/enschede/",
+        "https://www.huizenzoeker.nl/huur/groningen/groningen/",
+        "https://www.huizenzoeker.nl/huur/friesland/leeuwarden/",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/leiden/",
+        "https://www.huizenzoeker.nl/huur/limburg/maastricht/",
+        "https://www.huizenzoeker.nl/huur/gelderland/nijmegen/",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/rotterdam/",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/tilburg/",
+        "https://www.huizenzoeker.nl/huur/utrecht/utrecht/"
     ]
     
     def parse(self, response):
@@ -25,19 +39,33 @@ class AppartmentSpider(Spider):
     def parse_appartment(self, response):
         item = AppartmentItem()
         
-        raw_location = response.xpath("//*/p[@class='locatie']/text()").extract()
-        print(">"*10, raw_location)
-        location_string = re.sub(r'[^\w]', '', raw_location[0]) # Remove all the weird characters
-        print(">"*10, location_string)
-        item['city'] = location_string[6:]
-        item['postal_code'] = location_string[:6]
+        try:
+            raw_location = response.xpath("//*/p[@class='locatie']/text()").extract()
+            location_string = re.sub(r'[^\w]', '', raw_location[0]) # Remove all the weird characters
+            item['city'] = location_string[6:]
+            item['postal_code'] = location_string[:6]
+        except IndexError:
+            print("Item has no adress, skipping this item.")
+            return
+            
+        try:
+            price_raw = response.xpath("//*/div[@class='prijs']/strong/text()").extract()
+            item['price'] = re.sub(r'[^\d]', '', price_raw[0]) # Remove the euro and dot
+        except IndexError:
+            print("Item has no price, skipping this item.")
+            return
         
-        price_raw = response.xpath("//*/div[@class='prijs']/strong/text()").extract()
-        item['price'] = re.sub(r'[^\d]', '', price_raw[0]) # Remove the euro and dot
+        try:
+            size_raw = response.xpath("//*/th[text()='Woonoppervlakte']/following::td[1]/text()").extract()
+            item['size'] = re.sub(r'[^\d]', '', size_raw[0]) # Remove the m2
+        except IndexError:
+            print("Item has no area, skipping this item.")
+            return
         
-        size_raw = response.xpath("//*/th[text()='Woonoppervlakte']/following::td[1]/text()").extract()
-        item['size'] = re.sub(r'[^\d]', '', size_raw[0]) # Remove the m2
-        
-        item['rooms'] = response.xpath("//*/th[text()='Aantal kamers']/following::td[1]/text()").extract()
+        try:
+            item['rooms'] = response.xpath("//*/th[text()='Aantal kamers']/following::td[1]/text()").extract()[0]
+        except IndexError:
+            print("Item has no number of rooms, skipping this item.")
+            return
         
         yield item

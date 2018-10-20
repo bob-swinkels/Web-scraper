@@ -14,8 +14,6 @@ BOT_NAME = 'appartment'
 SPIDER_MODULES = ['appartment.spiders']
 NEWSPIDER_MODULE = 'appartment.spiders'
 
-DOWNLOAD_DELAY = 5
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'appartment (+http://www.yourdomain.com)'
 
@@ -28,16 +26,16 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -51,11 +49,14 @@ ROBOTSTXT_OBEY = True
 #    'appartment.middlewares.AppartmentSpiderMiddleware': 543,
 #}
 
+ROTATING_PROXY_LIST_PATH = '/Users/bobswinkels/Stack/Projecten/Python/Web-scraper/appartment/appartment/proxies.txt'
+
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'appartment.middlewares.AppartmentDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -89,3 +90,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+

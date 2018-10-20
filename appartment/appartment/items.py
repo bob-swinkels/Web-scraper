@@ -8,5 +8,8 @@
 from scrapy import Item, Field
 
 class AppartmentItem(Item):
-    title = Field()
-    url = Field()
+    city = Field()
+    postal_code = Field()
+    price = Field()
+    size = Field()
+    rooms = Field()

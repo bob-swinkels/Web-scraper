@@ -34,5 +34,7 @@ $ pip install -r requirements.txt
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+Thanks to **Paula Wabeke** for het creative input, and effective problem-solving during the creation of this program.
+
 ## License
 [MIT](LICENSE)

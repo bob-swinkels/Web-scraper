@@ -2,7 +2,7 @@
 
 Script to scape all rental appartment information from [HuizenZoeker.nl](https://www.huizenzoeker.nl) (city, postal code, size, number of rooms, price) for all Dutch student cities. I have made this program for a school project.
 
-You can process the resulting .json file from this program to calculate the dictance from the postal code to the center of the city the appatment is in and convert the .json to .csv for further processing.
+You can process the resulting .json file from this program to calculate the dictance from the postal code to the center of the city the appatment is in and convert the .json to .csv for further processing using my other project [Web-scaper-geocoding](https://github.com/bob-swinkels/Web-scraper-geocoding).
 
 ---
 **DISCLAIMER:**

@@ -9,21 +9,21 @@ class AppartmentSpider(Spider):
     name = "appartment"
     allowed_domains = ["huizenzoeker.nl"]
     start_urls = [
-        "https://www.huizenzoeker.nl/huur/noord-holland/amsterdam/",
-        "https://www.huizenzoeker.nl/huur/noord-brabant/breda/",
-        "https://www.huizenzoeker.nl/huur/zuid-holland/delft/",
-        "https://www.huizenzoeker.nl/huur/noord-brabant/s-hertogenbosch/",
-        "https://www.huizenzoeker.nl/huur/zuid-holland/s-gravenhage/",
-        "https://www.huizenzoeker.nl/huur/noord-brabant/eindhoven/",
-        "https://www.huizenzoeker.nl/huur/overijssel/enschede/",
-        "https://www.huizenzoeker.nl/huur/groningen/groningen/",
-        "https://www.huizenzoeker.nl/huur/friesland/leeuwarden/",
-        "https://www.huizenzoeker.nl/huur/zuid-holland/leiden/",
-        "https://www.huizenzoeker.nl/huur/limburg/maastricht/",
-        "https://www.huizenzoeker.nl/huur/gelderland/nijmegen/",
-        "https://www.huizenzoeker.nl/huur/zuid-holland/rotterdam/",
-        "https://www.huizenzoeker.nl/huur/noord-brabant/tilburg/",
-        "https://www.huizenzoeker.nl/huur/utrecht/utrecht/"
+        "https://www.huizenzoeker.nl/huur/noord-holland/amsterdam/?so=2",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/breda/?so=2",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/delft/?so=2",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/s-hertogenbosch/?so=2",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/s-gravenhage/?so=2",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/eindhoven/?so=2",
+        "https://www.huizenzoeker.nl/huur/overijssel/enschede/?so=2",
+        "https://www.huizenzoeker.nl/huur/groningen/groningen/?so=2",
+        "https://www.huizenzoeker.nl/huur/friesland/leeuwarden/?so=2",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/leiden/?so=2",
+        "https://www.huizenzoeker.nl/huur/limburg/maastricht/?so=2",
+        "https://www.huizenzoeker.nl/huur/gelderland/nijmegen/?so=2",
+        "https://www.huizenzoeker.nl/huur/zuid-holland/rotterdam/?so=2",
+        "https://www.huizenzoeker.nl/huur/noord-brabant/tilburg/?so=2",
+        "https://www.huizenzoeker.nl/huur/utrecht/utrecht/?so=2"
     ]
     
     def parse(self, response):
@@ -38,6 +38,7 @@ class AppartmentSpider(Spider):
             
     def parse_appartment(self, response):
         item = AppartmentItem()
+        item['url'] = response.request.url
         
         try:
             raw_location = response.xpath("//*/p[@class='locatie']/text()").extract()

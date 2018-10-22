@@ -17,7 +17,7 @@ You can process the resulting .json file from this program to calculate the dict
 * PyPI
 
 ## Usage
-Make sure the [proxies.txt](appartment\appartment\proxies.txt) file is up to date with working proxies, any number is fine as long as they are working. More is faster. You can get proxies for free from [free-proxy-list.net](https://free-proxy-list.net/) or any other proxy site you like.
+First fill the [proxies.txt](appartment\appartment\proxies.txt) file with up to date and working proxies, any number is fine as long as they are working. More is faster. You can get proxies for free from [free-proxy-list.net](https://free-proxy-list.net/) or any other proxy site you like.
 Move into the appartment folder and start the crawler with in JSON output mode.
 ```
 $ scrapy crawl appartment -o appartment-list.json -t json
